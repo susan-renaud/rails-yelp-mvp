@@ -6,13 +6,18 @@ class ReviewsController < ApplicationController # :nodoc:
   end
 
   def create
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @review = Restaurant.new(review_params)
-    @review.save
+    if @review.save
+      redirect_to restaurant_path(@restaurant)
+    else
+      render 'restaurants/show'
+    end
   end
 
   private
 
   def review_params
-    params.require(:review).permit(:content, :rating)
+    params.require(:review).permit(:rating, :content)
   end
 end
