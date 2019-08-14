@@ -6,7 +6,13 @@ class ReviewsController < ApplicationController # :nodoc:
   end
 
   def create
-    @review = Restaurant.new(params[:restaurant])
+    @review = Restaurant.new(review_params)
     @review.save
+  end
+
+  private
+
+  def review_params
+    params.require(:review).permit(:content, :rating)
   end
 end
